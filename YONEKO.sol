@@ -1,36 +1,56 @@
 /*
-* YO KITTIES smart contract
-* TODO put cool ASCII art here
+*                                                                                                                                                                                                                                                                           
+*                     ##    ##  #######                            
+*                      ##  ##  ##     ##                           
+*                       ####   ##     ##                           
+*                        ##    ##     ##                           
+*                        ##    ##     ##                           
+*                        ##    ##     ##                           
+*                        ##     #######                            
+*   ##    ## #### ######## ######## #### ########  ######          
+*   ##   ##   ##     ##       ##     ##  ##       ##    ##         
+*   ##  ##    ##     ##       ##     ##  ##       ##               
+*   #####     ##     ##       ##     ##  ######    ######          
+*   ##  ##    ##     ##       ##     ##  ##             ##         
+*   ##   ##   ##     ##       ##     ##  ##       ##    ##         
+*   ##    ## ####    ##       ##    #### ########  ######          
+*
+*         Feline frens joining the Dastardly Ducks
+*             smol farm x Iron Chef Cat Cora
+*            Contract by: existentialenso.eth                                                                                                                               
 */
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.4;
 
 import "./ERC721A.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
 contract YONEKO is ERC721A, Ownable, Pausable {
-    uint256 public mintPrice = 0.02 ether;
+    uint256 public mintPrice = 0.015 ether;
     uint256 public constant maxTokens = 5000;
 
-    string public constant baseURI = "ipfs://FINAL_IPFS_URL_HERE/";
+    string public constant baseURI = "ipfs://QmPEdkX3maugP74zD1BLBNgP8DDkU6Kp6rosaPSCguY11k/";
 
-    constructor() ERC721A("Yo Kitties", "YONEKO", 100) {
+    constructor() ERC721A("Yo Kitties", "YONEKO") {
         _pause();
     }
 
-    function mintCat(uint256 qty) public payable whenNotPaused {
-        require(qty <= 100, 'MAX_BATCH_EXCEEDED');
-        require(mintPrice * qty <= msg.value, 'LOW_ETHER');
+    function mintCats(uint256 qty) public payable whenNotPaused {
+        require(qty <= 25, 'MAX_QTY_EXCEEDED');
+        unchecked { require(mintPrice * qty <= msg.value, 'LOW_ETHER'); }
         unchecked { require(totalSupply() + qty <= maxTokens, 'MAX_REACHED'); }
-        _safeMint(msg.sender, 1);
+        _safeMint(msg.sender, qty);
     }
 
-    // Mint the first 60 kitties to the smol farm wallet for promotional purposes
+    // Mint the first 60 ducks to smol farm-held wallets
     function promoMint() public onlyOwner {
         unchecked { require(totalSupply() == 0, 'PROMO_ALREADY_RUN'); }
-        _unpause();
 
-        _safeMint(0xafE9c4e5585334D545A9CF43Aa9415a11AC3D7b3, 60);
+        _safeMint(0x8aa986eB2F0D3b5001C9C2093698A4e13d646D5b, 10);
+        _safeMint(0x8f4612e9aAB90eaD61A1637436BCb9FD0b606652, 10);
+        _safeMint(0x72CAa8687E5C63f8bA2a271212556dA5eD58f0b0, 40);
+
+        _unpause();
     }
 
     function setPrice(uint256 newPrice) public onlyOwner {
