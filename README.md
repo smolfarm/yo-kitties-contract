@@ -5,6 +5,10 @@ The usage of ```unchecked {}``` blocks enables significant gas savings, particul
 
 This contract makes use of ERC721A, much like our previous profile pic collection, [Dastardly Ducks](https://dastardlyducks.com), though we are now using v3.0.0 instead of v1.0.0, offering further improvements and refinements over what was available two months prior to this project.
 
+## Notes
+
+The comments on ```promoMint()``` says "ducks" instead of "kitties." This reflects an error present in the contract at deployment time, though, fortunately, does not affect functionality. 
+
 ## Yo Kitties
 * [Website](https://yokitties.com)
 * [Etherscan](https://etherscan.io/address/0xC303Ff7a410fB8cD27c203753088009630e2DDd4)
